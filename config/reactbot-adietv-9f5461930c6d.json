@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "reactbot-adietv",
+  "private_key_id": "9f5461930c6d2eb26069eafe21a76ec9dfccc03d",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDvTMIzq73anbth\nsZ0xCQ13BnZMYoZ9aCL7HJC0gVA//4Ego0BmLN5t3s7D3zu+gJAo5lGtPlQ9RTJa\nhZuMtxWD+hbIRAZI9rJmwobvySmLC+fu+pg0VvnRnaiHh6kGrZgxtRfDiPEtWgVX\nYhvu6nLkeUHPc20I+fj/qR+Vk8oTgYMOi3Wr+1o3M46ez6pjzu+2TWIy7SZYKylY\n02GujBpeTUC4GZF/wMLtQ+U0H282bQIaxkY+CXi+hHsAJUx7+31ep7lPqk4Mf3KE\n+dM+a1zo4XEESRd4iDVAo48L+/3EakiLIcrx+T5+V6SR7v90C0sM3lwLw0rcv/hM\nE36HJDHHAgMBAAECggEAGwNJMNgEOHdxvZd1LSHeeT8rf3fnwqRMvpf85cNrMa4/\n/1UuYdpSyYhLQuUiM2ED5PoK4kmU7M2w33MRmhLYxOsoQzcaloXyoZL39H16yQ1x\nAxMat13SGY14hsQTmoNiGMpegl4lC3+L9s9GY/PnQE9H1IktF8RQDVwkCpiCSS0v\nn0MrvQBhjTm00HSeP/BHraieGjXsEBSy6ilBfqhG5i2B+QCQoRa1zAGXEIqm8FYw\n3kCB8QZzWswhYg2+0Y7TAzHg7lAgHk4jFlMmaQtJKE+Hy7rIsATXFPwTZU9cKlLz\n9SeqMVGC1m14gv/7snlKWZALgIAB3uYaokP2/zr0EQKBgQD9JxXydx/SQ8TSVq/9\nhioHomhI+tqDQ1T8SajrrhMdwKytuF5ljHpXu3rNgMGzeBtdvX8a8VQJ5ZeJcG15\nYtiwTh9elUqmjE65r1MhEADeGCuJpIG8C5cXVJfzYxlAPe9FNFJYp9kkBcAkV9jD\nmWtrfvJ2XREacAqs2Ke6eSiB7QKBgQDx/ckmdkE/XY3O9lbyrWNPi678eBbZaNQi\ncM/y7NNRhKENr9i8d+Z3R/QIm9hjQvOL/OScQ1oid8aG59mRX/KuixGolIyxlxbb\n+ehrB2SsyIUtgeDPqsLHWVqPo4fRvrU1BtGvBSKooE50PNaJ1eJagd2agPd0FB95\nzq96B6/cAwKBgALG/f+l/Oxin/Mqzk16vlVNG9XJIsKT54fJCxhi1YTbC0nwnuCA\nVQtHXEaK5hUg+TPjE1TpVuGw6iOw3xKY2gW9Jaz0+FexbF+vI7tWIJxPKZMeAepd\nOjAgVnZuHOXOiCR7OXgNh11UztHXQOKMeVg5kVFpHfnrRsK0scpi7+XVAoGBAJAD\nMqRbF/V33Z7fZ1tA6Ks8O8UwSpjUE/rzHC471n7a6WXV0qxGxrcR8R72cE6SV5Jl\nzD9ardd5ZIKAlDA545kQVk/3J8vAWPBMx456deWF6AvvETVFMGmmuYhmD7w5PGn0\nRvFbowarcEUot5yL1wt54cHDIoDIQPsij7eVv4i1AoGANDb1hHlDADjUr1D/Hy3X\n0B4kBxm4iapeE4NdZDgjzUjgcfUxXndPB9X85LroaHTd3fk1Q0UdYzT9yk5ZRbdk\nHzz0AWTD8jzRhnOOTyuWOLdvQnRdQA3iqL6mJQgxjow4xNc0dpI/2JyDqVZ2n0at\nXaKjuFLNEtPLGJcUnH5w97s=\n-----END PRIVATE KEY-----\n",
+  "client_email": "reactbot-dialogflow@reactbot-adietv.iam.gserviceaccount.com",
+  "client_id": "117887431374022956427",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/reactbot-dialogflow%40reactbot-adietv.iam.gserviceaccount.com"
+}
