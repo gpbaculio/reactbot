@@ -8,4 +8,10 @@ app.use(bodyParser.json())
 
 require('./routes/dialogFlowRoutes')(app)
 
+// test route
+
+app.get('/', (req, res) => {
+  res.send({ 'hello': 'route check' })
+})
+
 app.listen(PORT)
