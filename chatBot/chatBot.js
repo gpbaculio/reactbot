@@ -5,11 +5,14 @@ const config = require('../config/keys')
 
 
 const projectId = config.googleProjectId
+console.log('projectId ', projectId)
 const languageCode = config.dialogFlowSessionLanguageCode
+console.log('languageCode ', languageCode)
 const credentials = {
   client_email: config.googleClientEmail,
   private_key: config.googlePrivateKey
 }
+console.log('credentials ', credentials)
 
 const sessionClient = new dialogFlow.SessionsClient({
   projectId,
@@ -20,6 +23,7 @@ const sessionPath = sessionClient.sessionPath(
   config.dialogFlowSessionId
 );
 
+console.log('sessionPath ', sessionPath)
 
 module.exports = {
   textQuery: async (text, parameters = {}) => {
