@@ -24,3 +24,5 @@ yarn-error.log*
 /build
 .vscode/launch.json
 /src/assets/scss/material-dashboard-pro-react.css
+
+config/dev.js
