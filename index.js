@@ -9,7 +9,7 @@ app.use(bodyParser.json())
 
 require('./routes/dialogFlowRoutes')(app)
 
-const clientDir = `client/${process.env.NODE_ENV === 'production' ? 'public' : 'build'}`
+const clientDir = `./client/${process.env.NODE_ENV === 'production' ? 'public' : 'build'}`
 
 const staticPath = path.join(__dirname, clientDir);
 app.use(express.static(staticPath));
