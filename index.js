@@ -15,6 +15,7 @@ const staticPath = path.join(__dirname, 'client', clientRootDir);
 app.use(express.static(staticPath));
 
 const publicPath = path.join(__dirname, 'client', clientRootDir, 'index.html');
+console.log('publicPath', publicPath)
 app.get('/*', (_req, res) => res.sendFile(publicPath));
 
 app.listen(PORT, () => {
