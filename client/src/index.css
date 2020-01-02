@@ -7,7 +7,15 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+
+.chat-main {
+  height: 400px;
+  width: 400px;
+  margin-left: auto;
+}
+
+.chat-body {
+  overflow: auto;
+  width: 100%;
+  height: 100%;
 }

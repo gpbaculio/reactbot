@@ -1,6 +1,6 @@
 const dialogFlow = require('dialogflow')
 const structJson = require('structjson')
-const uuid = require('uuid')
+const uuidV4 = require('uuid/v4')
 
 const projectId = process.env.GOOGLE_PROJECT_ID
 const credentials = {
@@ -8,7 +8,7 @@ const credentials = {
   private_key: JSON.parse(process.env.GOOGLE_PRIVATE_KEY)
 }
 
-const sessionId = uuid.v4();
+const sessionId = uuidV4();
 const languageCode = 'en-US'
 
 const sessionClient = new dialogFlow.SessionsClient({
