@@ -14,7 +14,8 @@
     "start": "node index.js",
     "backend": "nodemon index.js",
     "frontend": "npm run start --prefix client",
-    "dev": "concurrently \"npm run backend\" \"npm run frontend\""
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "heroku-postbuild": "npm install && cd client && npm install && npm run build"
   },
   "devDependencies": {
     "concurrently": "^5.0.2",
