@@ -13,7 +13,6 @@ const staticPath = path.join(__dirname, clientDir);
 app.use(express.static(staticPath));
 
 const publicPath = path.join(__dirname, `${clientDir}/index.html`);
-console.log('publicPath ', publicPath)
 app.get('/*', (_req, res) => res.sendFile(publicPath));
 
 require('./routes/dialogFlowRoutes')(app)
