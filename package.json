@@ -7,13 +7,17 @@
     "body-parser": "^1.19.0",
     "dialogflow": "^1.0.0",
     "express": "^4.17.1",
-    "structjson": "^1.0.1"
+    "structjson": "^1.0.1",
+    "uuid": "^3.3.3"
   },
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "backend": "nodemon index.js",
+    "frontend": "npm run start --prefix client",
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\""
   },
   "devDependencies": {
+    "concurrently": "^5.0.2",
     "nodemon": "^2.0.2"
   }
 }

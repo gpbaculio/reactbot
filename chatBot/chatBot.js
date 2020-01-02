@@ -1,29 +1,25 @@
 const dialogFlow = require('dialogflow')
 const structJson = require('structjson')
+const uuid = require('uuid')
 
-const config = require('../config/keys')
-
-
-const projectId = config.googleProjectId
-console.log('projectId ', projectId)
-const languageCode = config.dialogFlowSessionLanguageCode
-console.log('languageCode ', languageCode)
+const projectId = process.env.GOOGLE_PROJECT_ID
 const credentials = {
-  client_email: config.googleClientEmail,
-  private_key: config.googlePrivateKey
+  client_email: process.env.GOOGLE_CLIENT_EMAIL,
+  private_key: JSON.parse(process.env.GOOGLE_PRIVATE_KEY)
 }
-console.log('credentials ', credentials)
+
+const sessionId = uuid.v4();
+const languageCode = 'en-US'
 
 const sessionClient = new dialogFlow.SessionsClient({
   projectId,
   credentials
 });
-const sessionPath = sessionClient.sessionPath(
-  config.googleProjectId,
-  config.dialogFlowSessionId
-);
 
-console.log('sessionPath ', sessionPath)
+const sessionPath = sessionClient.sessionPath(
+  projectId,
+  sessionId
+);
 
 module.exports = {
   textQuery: async (text, parameters = {}) => {

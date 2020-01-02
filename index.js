@@ -14,4 +14,6 @@ app.get('/', (req, res) => {
   res.send({ 'hello': 'route check' })
 })
 
-app.listen(PORT)
+app.listen(PORT, () => {
+  console.log(`PROJECT RUNNING ON PORT: ${PORT}`)
+})
