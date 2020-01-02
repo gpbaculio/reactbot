@@ -9,12 +9,6 @@ app.use(bodyParser.json())
 
 require('./routes/dialogFlowRoutes')(app)
 
-// test route
-
-app.get('/', (_req, res) => {
-  res.send({ 'hello': 'route check' })
-})
-
 const clientDir = `client/${process.env.NODE_ENV === 'production' ? 'public' : 'build'}`
 
 const staticPath = path.join(__dirname, clientDir);
