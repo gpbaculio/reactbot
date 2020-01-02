@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 5000
 
 app.use(bodyParser.json())
 
-const clientDir = `client/${process.env.NODE_ENV === 'production' ? 'public' : 'build'}`
+const clientDir = 'client/build'
 
 const staticPath = path.join(__dirname, clientDir);
 app.use(express.static(staticPath));
