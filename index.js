@@ -9,12 +9,12 @@ app.use(bodyParser.json())
 
 require('./routes/dialogFlowRoutes')(app)
 
-const clientDir = `./client/${process.env.NODE_ENV === 'production' ? 'public' : 'build'}`
+const clientRootDir = process.env.NODE_ENV === 'production' ? 'public' : 'build'
 
-const staticPath = path.join(__dirname, clientDir);
+const staticPath = path.join(__dirname, 'client', clientRootDir);
 app.use(express.static(staticPath));
 
-const publicPath = path.join(__dirname, `${clientDir}/index.html`);
+const publicPath = path.join(__dirname, 'client', clientRootDir, 'index.html');
 app.get('/*', (_req, res) => res.sendFile(publicPath));
 
 app.listen(PORT, () => {
