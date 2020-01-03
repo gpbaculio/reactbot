@@ -67,11 +67,11 @@ const Chatbot = () => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   useEffect(() => {
     dfEventQuery("Welcome");
+    inputRef.current!.focus();
   }, []); //empty array means run effect on didmount only
 
   useEffect(() => {
     messagesEnd.current!.scrollIntoView({ behavior: "smooth" });
-    inputRef.current!.focus();
   }, [messages]); // when messages updated, fire if!
 
   return (
