@@ -8,7 +8,6 @@ const credentials = {
   private_key: JSON.parse(process.env.GOOGLE_PRIVATE_KEY)
 }
 
-const sessionId = uuidV4();
 const languageCode = 'en-US'
 
 const sessionClient = new dialogFlow.SessionsClient({
@@ -16,16 +15,15 @@ const sessionClient = new dialogFlow.SessionsClient({
   credentials
 });
 
-const sessionPath = sessionClient.sessionPath(
-  projectId,
-  sessionId
-);
 
 module.exports = {
-  textQuery: async (text, parameters = {}) => {
+  textQuery: async (text, sessionUserId, parameters = {}) => {
     let self = module.exports
     const request = {
-      session: sessionPath,
+      session: sessionClient.sessionPath(
+        projectId,
+        sessionUserId
+      ),
       queryInput: {
         text: {
           // The query to send to the dialogflow agent
@@ -44,10 +42,13 @@ module.exports = {
     responses = await self.handleAction(responses)
     return responses
   },
-  eventQuery: async (event, parameters = {}) => {
+  eventQuery: async (event, sessionUserId, parameters = {}) => {
     let self = module.exports
     const request = {
-      session: sessionPath,
+      session: sessionClient.sessionPath(
+        projectId,
+        sessionUserId
+      ),
       queryInput: {
         event: {
           // The query to send to the dialogflow agent
