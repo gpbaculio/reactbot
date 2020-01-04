@@ -46,7 +46,6 @@ const QuickReply: React.FC<QuickReplyProps> = ({ reply, click }) => {
         href={reply.structValue.fields.link.stringValue}
         className="btn-floating btn-large waves-effect waves-light red"
       >
-        ss
         {reply.structValue.fields.text.stringValue}
       </a>
     );
