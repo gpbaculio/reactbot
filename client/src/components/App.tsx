@@ -14,9 +14,7 @@ const App = () => {
         <Route exact path="/" component={Landing} />
         <Route exact path="/about" component={About} />
         <Route exact path="/shop" component={Shop} />
-        <div className="chat-container">
-          <Chatbot />
-        </div>
+        <Chatbot />
       </div>
     </BrowserRouter>
   );
