@@ -1,9 +1,16 @@
 const express = require('express')
+const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const path = require('path')
-const app = express()
 
+
+const MONGO_URI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PW}@cluster0-idcau.mongodb.net/reactbot?retryWrites=true&w=majority`
 const PORT = process.env.PORT || 5000
+
+mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+require('./models/Registration');
+
+const app = express()
 
 app.use(bodyParser.json())
 

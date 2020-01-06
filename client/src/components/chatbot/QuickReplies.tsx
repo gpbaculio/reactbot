@@ -23,12 +23,9 @@ const QuickReplies: React.FC<QuickRepliesProps> = ({
   replyClick,
   payload
 }) => {
-  const handleClick = async ({ e, payload, text }: ReplyClickArgsType) => {
-    await replyClick({ e, payload, text });
-  };
   const renderQuickReplies = (replies: QuickReplyType[]) =>
     replies.map(reply => (
-      <QuickReply key={uuidV4()} reply={reply} click={handleClick} />
+      <QuickReply key={uuidV4()} reply={reply} click={replyClick} />
     ));
   return (
     <div className="col s12 m8 offset-m2 l6 offset-l3">

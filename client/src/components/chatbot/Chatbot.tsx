@@ -1,13 +1,16 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import uuidV4 from "uuid/v4";
 import axios from "axios";
 import Cookies from "universal-cookie";
+import { History } from "history";
+import { withRouter } from "react-router-dom";
 
 import Message from "./Message";
 import Card from "./Card";
 import QuickReplies from "./QuickReplies";
 import { QuickReplyType } from "./QuickReply";
 import { ReplyClickArgsType } from "./QuickReplies";
+import { RouteComponentProps } from "react-router";
 
 export interface CardStructValueType {
   structValue: {
@@ -30,6 +33,7 @@ export interface CardStructValueType {
     };
   };
 }
+
 export interface MessageDataType {
   speaks: string;
   msg: {
@@ -42,7 +46,7 @@ export interface MessageDataType {
         text: {
           stringValue: string;
         };
-        soaps: {
+        courses: {
           listValue: {
             values: [CardStructValueType];
           };
@@ -56,6 +60,7 @@ export interface MessageDataType {
     };
   };
 }
+
 export interface QuickRepliesPayloadType {
   payload?: {
     stringValue: string;
@@ -70,12 +75,16 @@ export interface QuickRepliesPayloadType {
 
 const cookies = new Cookies();
 
-const Chatbot = () => {
+interface ChatbotPropsType extends RouteComponentProps {}
+
+const Chatbot: React.FC<ChatbotPropsType> = ({ history }) => {
   const userId = cookies.get("userId");
   if (userId === undefined) cookies.set("userId", uuidV4(), { path: "/" });
 
   const [messages, setMessages] = useState<MessageDataType[]>([]);
   const [userSay, setUserSay] = useState("");
+  const [showChatbot, setShowChatbot] = useState(true);
+  const [shopWelcomeSent, setShopWelcomeSent] = useState(false);
 
   const dfTextQuery = async (text: string) => {
     const userSay: MessageDataType = {
@@ -96,15 +105,18 @@ const Chatbot = () => {
     }
   };
 
-  const dfEventQuery = async (event: string) => {
-    const {
-      data: { result }
-    } = await axios.post("/api/df_event_query", { event, userId });
-    for (let msg of result.fulfillmentMessages) {
-      const botSay: MessageDataType = { speaks: "bot", msg };
-      setMessages(oldMessages => [...oldMessages, botSay]);
-    }
-  };
+  const dfEventQuery = useCallback(
+    async (event: string) => {
+      const {
+        data: { result }
+      } = await axios.post("/api/df_event_query", { event, userId });
+      for (let msg of result.fulfillmentMessages) {
+        const botSay: MessageDataType = { speaks: "bot", msg };
+        setMessages(oldMessages => [...oldMessages, botSay]);
+      }
+    },
+    [userId]
+  );
 
   const renderCards = (cards: [CardStructValueType]) =>
     cards.map(card => <Card key={uuidV4()} {...card.structValue.fields} />);
@@ -113,7 +125,7 @@ const Chatbot = () => {
     messages.map(({ speaks, msg }) => {
       if (msg && msg.text && msg.text.text)
         return <Message key={uuidV4()} speaks={speaks} text={msg.text!.text} />;
-      else if (msg && msg.payload?.fields.soaps) {
+      else if (msg && msg.payload?.fields.courses) {
         return (
           <div
             key={uuidV4()}
@@ -130,10 +142,11 @@ const Chatbot = () => {
                 className="cards-container"
                 style={{
                   height: "auto",
-                  width: msg.payload!.fields.soaps.listValue.values.length * 270
+                  width:
+                    msg.payload!.fields.courses.listValue.values.length * 270
                 }}
               >
-                {renderCards(msg.payload!.fields.soaps.listValue.values)}
+                {renderCards(msg.payload!.fields.courses.listValue.values)}
               </div>
             </div>
           </div>
@@ -153,6 +166,7 @@ const Chatbot = () => {
             payload={msg.payload!.fields.quick_replies.listValue.values}
           />
         );
+      else return null;
     });
 
   const handleInputKeyPress = async (e: React.KeyboardEvent) => {
@@ -163,50 +177,88 @@ const Chatbot = () => {
   };
   const messagesEnd = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const resolveInXSeconds = (x: number) =>
+    new Promise(resolve => {
+      setTimeout(() => {
+        resolve(x);
+      }, x * 1000);
+    });
   useEffect(() => {
     dfEventQuery("Welcome");
-    inputRef.current!.focus();
-  }, []); //empty array means run effect on didmount only
+    if (inputRef.current) inputRef.current.focus();
+    const sendShopWelcome = async () => {
+      await resolveInXSeconds(1);
+      dfEventQuery("WELCOME_SHOP");
+      setShopWelcomeSent(true);
+      setShowChatbot(true);
+    };
+    if (window.location.pathname === "/shop" && !shopWelcomeSent) {
+      sendShopWelcome();
+    }
+    history.listen(() => {
+      if (history.location.pathname === "/shop" && !shopWelcomeSent) {
+        sendShopWelcome();
+      }
+    });
+  }, [shopWelcomeSent, history, dfEventQuery]);
 
   useEffect(() => {
-    messagesEnd.current!.scrollIntoView({ behavior: "smooth" });
+    if (messagesEnd.current)
+      messagesEnd.current.scrollIntoView({ behavior: "smooth" });
   }, [messages]); // when messages updated, fire if!
 
-  const handleQuickReply = async ({ e, payload, text }: ReplyClickArgsType) => {
+  const handleQuickReply = ({ e, payload, text }: ReplyClickArgsType) => {
     e.preventDefault();
     e.stopPropagation();
-    await dfTextQuery(text);
+    switch (payload) {
+      case "recommended_yes":
+        dfEventQuery("SHOW_RECOMMENDATIONS");
+        break;
+      case "training_masterclass":
+        dfEventQuery("MASTERCLASS");
+        break;
+      default:
+        dfTextQuery(text);
+        break;
+    }
   };
 
   return (
     <div className="chat-main d-flex flex-column">
-      <nav>
+      <nav className="chat-nav" onClick={() => setShowChatbot(!showChatbot)}>
         <div className="nav-wrapper">
-          <a className="brand-logo">Chatbot</a>
+          <div className="brand-logo" style={{ paddingLeft: "0.5rem" }}>
+            Chatbot
+          </div>
         </div>
       </nav>
-      <div className="chat-body">
-        {renderMessages(messages)}
-        <div ref={messagesEnd} />
-      </div>
-      <div className="col s12">
-        <input
-          style={{
-            width: "98%",
-            paddingLeft: "1%",
-            paddingRight: "1%",
-            marginBottom: 0
-          }}
-          ref={inputRef}
-          type="text"
-          placeholder="type a message"
-          value={userSay}
-          onChange={e => setUserSay(e.target.value)}
-          onKeyPress={handleInputKeyPress}
-        />
-      </div>
+      {showChatbot && (
+        <>
+          <div className="chat-body">
+            {renderMessages(messages)}
+            <div ref={messagesEnd} />
+          </div>
+          <div className="col s12">
+            <input
+              className="chat-input"
+              style={{
+                width: "98%",
+                paddingLeft: "1%",
+                paddingRight: "1%",
+                marginBottom: 0
+              }}
+              ref={inputRef}
+              type="text"
+              placeholder="type a message"
+              value={userSay}
+              onChange={e => setUserSay(e.target.value)}
+              onKeyPress={handleInputKeyPress}
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 };
 
-export default Chatbot;
+export default withRouter(Chatbot);
